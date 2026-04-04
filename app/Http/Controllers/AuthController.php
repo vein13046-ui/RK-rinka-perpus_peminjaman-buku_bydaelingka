@@ -25,7 +25,12 @@ class AuthController extends Controller
 
         if (Auth::attempt($request->only('email', 'password'))) {
             $request->session()->regenerate();
-            return redirect()->intended('dashboard');
+            
+            $user = Auth::user();
+            if ($user->role === 'admin') {
+                return redirect()->intended('dashboard');
+            }
+            return redirect()->intended('dashboard.user');
         }
 
         return back()->withErrors([
@@ -52,6 +57,7 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => 'user',
         ]);
 
         // Auth::login($user); // Commented auto-login per user request
@@ -66,6 +72,12 @@ class AuthController extends Controller
     {
         return view('dashboard');
     }
+
+        // User Dashboard
+        public function userDashboard()
+        {
+            return view('dashboarduser');
+        }
 
     // Logout
     public function logout(Request $request)
