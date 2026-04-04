@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller
 {
@@ -78,6 +79,39 @@ class AuthController extends Controller
         {
             return view('dashboarduser');
         }
+
+    /**
+     * Show user profile
+     */
+    public function profile()
+    {
+        $user = Auth::user();
+        return view('profile', compact('user'));
+    }
+
+    /**
+     * Update user profile photo
+     */
+    public function updateProfilePhoto(Request $request)
+    {
+        $request->validate([
+            'profile_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $user = Auth::user();
+
+        // Delete old photo if exists
+        if ($user->profile_photo) {
+            Storage::disk('public')->delete($user->profile_photo);
+        }
+
+        // Store new photo
+        $path = $request->file('profile_photo')->store('avatars', 'public');
+        
+        $user->update(['profile_photo' => $path]);
+        
+        return back()->with('success', 'Foto profil berhasil diupdate!');
+    }
 
     // Logout
     public function logout(Request $request)

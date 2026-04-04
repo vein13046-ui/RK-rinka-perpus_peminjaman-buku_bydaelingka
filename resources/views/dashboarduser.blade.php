@@ -36,8 +36,8 @@
         <aside class="w-64 bg-white border-r border-slate-200 hidden md:flex flex-col">
             <div class="p-6">
                 <div class="flex items-center gap-2">
-                    <div class="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">U</div>
-                    <span class="text-xl font-bold tracking-tight text-slate-800">LibEdu <span class="text-green-600">User</span></span>
+                    <div class="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">RK</div>
+                    <span class="text-xl font-bold tracking-tight text-slate-800">RinKa <span class="text-green-600">Perpus</span></span>
                 </div>
             </div>
 
@@ -86,19 +86,65 @@
                     <div class="h-8 w-[1px] bg-slate-200"></div>
                     <span class="hidden sm:inline text-sm font-medium text-slate-500">Kamis, 2 April 2026</span>
 
-                    <!-- Logout Button -->
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" 
-                                onclick="event.preventDefault(); this.closest('form').submit();" 
-                                class="flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-sm font-semibold rounded-lg shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
-                                title="Keluar dari sistem">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
-                            </svg>
-                            Keluar
+                    <!-- Profile Dropdown -->
+                    <div class="relative">
+                        <button id="profileBtn" class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 transition-all group">
+                            <div class="w-10 h-10 rounded-full overflow-hidden shadow-md ring-2 ring-slate-200 group-hover:ring-green-300 transition-all">
+                                <img src="{{ Auth::user()->profilePhotoUrl() }}" alt="{{ Auth::user()->name }}" class="w-full h-full object-cover">
+                            </div>
+                            <div class="hidden sm:block min-w-0">
+                                <p class="text-sm font-semibold text-slate-800 truncate">{{ Auth::user()->name }}</p>
+                                <p class="text-xs text-slate-400 capitalize">{{ Auth::user()->role }}</p>
+                            </div>
                         </button>
-                    </form>
+                        
+                        <!-- Dropdown Menu -->
+                        <div id="profileDropdown" class="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-2xl border border-slate-200 opacity-0 invisible scale-95 origin-top-right transition-all duration-200 z-50 py-2">
+                            <div class="px-4 py-3 border-b border-slate-100">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-12 h-12 rounded-full overflow-hidden shadow-md">
+                                        <img src="{{ Auth::user()->profilePhotoUrl() }}" alt="{{ Auth::user()->name }}" class="w-full h-full object-cover">
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-slate-800">{{ Auth::user()->name }}</p>
+                                        <p class="text-sm text-slate-500">{{ Auth::user()->email }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="{{ route('profile') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-all">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                </svg>
+                                Profil
+                            </a>
+                            <form method="POST" action="{{ route('logout') }}" class="border-t border-slate-100">
+                                @csrf
+                                <button type="submit" onclick="event.preventDefault(); this.closest('form').submit();" 
+                                        class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-700 hover:bg-red-50 hover:text-red-600 transition-all">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                                    </svg>
+                                    Keluar
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <script>
+                        const profileBtn = document.getElementById('profileBtn');
+                        const dropdown = document.getElementById('profileDropdown');
+                        
+                        profileBtn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            dropdown.classList.toggle('opacity-100');
+                            dropdown.classList.toggle('invisible');
+                            dropdown.classList.toggle('scale-100');
+                        });
+                        
+                        document.addEventListener('click', () => {
+                            dropdown.classList.add('opacity-0', 'invisible', 'scale-95');
+                        });
+                    </script>
                 </div>
             </header>
 
