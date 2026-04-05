@@ -135,7 +135,10 @@
 
 
             <main class="flex-1 overflow-y-auto p-4 md:p-8">
-                <div class="max-w-6xl mx-auto">
+<div class="max-w-6xl mx-auto">
+    <!-- Promotional Ad Banner -->
+    @include('components.ad-banner')
+    
                     <!-- Tab: Dashboard -->
                     <div id="tab-dashboard" class="tab-pane active">
 
