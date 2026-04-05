@@ -18,7 +18,7 @@ Route::middleware('guest')->group(function () {
 // Protected - login/register locked
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
-    Route::get('/dashboard/user', [AuthController::class, 'userDashboard'])->name('dashboard.user');
+
     Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
     Route::post('/profile/photo', [AuthController::class, 'updateProfilePhoto'])->name('profile.update');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

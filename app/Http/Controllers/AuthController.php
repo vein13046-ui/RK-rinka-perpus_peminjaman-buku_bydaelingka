@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -28,10 +29,12 @@ class AuthController extends Controller
             $request->session()->regenerate();
             
             $user = Auth::user();
-            if ($user->role === 'admin') {
-                return redirect()->intended('dashboard');
-            }
-            return redirect()->intended('dashboard.user');
+            Log::info('User logged in', ['user_id' => $user->id, 'name' => $user->name, 'email' => $user->email, 'role' => $user->role ?? 'NULL']);
+            
+            $redirectTo = 'dashboard';
+            Log::info('Redirecting user to route', ['role' => $user->role ?? 'NULL', 'redirect_to' => $redirectTo]);
+            
+            return redirect()->intended($redirectTo);
         }
 
         return back()->withErrors([
@@ -77,7 +80,7 @@ class AuthController extends Controller
         // User Dashboard
         public function userDashboard()
         {
-            return view('dashboarduser');
+            return view('dashboard_user');
         }
 
     /**
