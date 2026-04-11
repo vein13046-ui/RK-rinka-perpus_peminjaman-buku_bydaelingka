@@ -4,11 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RinKa Perpus - @yield('page-title', 'Dashboard')</title>
+    <script>
+        (function () {
+            try {
+                if (localStorage.getItem('rinka-theme') === 'dark') {
+                    document.documentElement.classList.add('theme-dark');
+                }
+            } catch (e) {}
+        })();
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             color-scheme: light;
+        }
+        html.theme-dark {
+            color-scheme: dark;
         }
         body {
             font-family: 'Inter', sans-serif;
@@ -16,6 +28,90 @@
                 radial-gradient(circle at top left, rgba(37, 99, 235, 0.12), transparent 32%),
                 radial-gradient(circle at top right, rgba(16, 185, 129, 0.10), transparent 28%),
                 linear-gradient(180deg, #f8fafc 0%, #eef4ff 100%);
+            transition: background 0.25s ease, color 0.25s ease;
+        }
+        html.theme-dark body {
+            color: #dbe5f3;
+            background: #0b1220;
+        }
+        html.theme-dark .bg-white,
+        html.theme-dark .bg-white\/85,
+        html.theme-dark .bg-white\/75 {
+            background-color: #111a2e !important;
+        }
+        html.theme-dark .bg-slate-50,
+        html.theme-dark .bg-slate-50\/70,
+        html.theme-dark .bg-slate-50\/80,
+        html.theme-dark .bg-slate-100 {
+            background-color: #0f172a !important;
+        }
+        html.theme-dark .border-slate-100,
+        html.theme-dark .border-slate-200,
+        html.theme-dark .border-slate-200\/80 {
+            border-color: #25324a !important;
+        }
+        html.theme-dark .text-slate-900 {
+            color: #f1f5f9 !important;
+        }
+        html.theme-dark .text-slate-800 {
+            color: #dbe5f3 !important;
+        }
+        html.theme-dark .text-slate-700 {
+            color: #c5d2e7 !important;
+        }
+        html.theme-dark .text-slate-600,
+        html.theme-dark .text-slate-500,
+        html.theme-dark .text-slate-400 {
+            color: #90a4bf !important;
+        }
+        html.theme-dark input,
+        html.theme-dark select,
+        html.theme-dark textarea {
+            background-color: #0a1323 !important;
+            border-color: #25324a !important;
+            color: #dbe5f3 !important;
+        }
+        html.theme-dark input::placeholder,
+        html.theme-dark textarea::placeholder {
+            color: #6f839e !important;
+        }
+        html.theme-dark [class*="shadow"] {
+            box-shadow: none !important;
+        }
+        html.theme-dark .backdrop-blur-xl {
+            backdrop-filter: none !important;
+        }
+        html.theme-dark .animate-pulse {
+            animation: none !important;
+        }
+        html.theme-dark .bg-gradient-to-r,
+        html.theme-dark .bg-gradient-to-br,
+        html.theme-dark .bg-gradient-to-l,
+        html.theme-dark .bg-gradient-to-t {
+            background-image: none !important;
+            background-color: #1d2a41 !important;
+        }
+        html.theme-dark .bg-blue-600,
+        html.theme-dark .bg-cyan-600,
+        html.theme-dark .bg-indigo-700,
+        html.theme-dark .bg-indigo-600 {
+            background-color: #2a3b57 !important;
+        }
+        html.theme-dark .hover\:bg-blue-50:hover,
+        html.theme-dark .hover\:bg-slate-50:hover,
+        html.theme-dark .hover\:bg-cyan-50:hover,
+        html.theme-dark .hover\:bg-rose-50:hover {
+            background-color: #1b263b !important;
+        }
+        html.theme-dark .text-blue-700,
+        html.theme-dark .text-blue-600,
+        html.theme-dark .text-cyan-700,
+        html.theme-dark .text-indigo-600,
+        html.theme-dark .text-emerald-600,
+        html.theme-dark .text-violet-600,
+        html.theme-dark .text-amber-700,
+        html.theme-dark .text-rose-600 {
+            color: #c3d5ee !important;
         }
         ::-webkit-scrollbar {
             width: 8px;
@@ -26,6 +122,12 @@
         ::-webkit-scrollbar-thumb {
             background: #94a3b8;
             border-radius: 999px;
+        }
+        html.theme-dark ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        html.theme-dark ::-webkit-scrollbar-thumb {
+            background: #475569;
         }
     </style>
 </head>
@@ -173,6 +275,15 @@
                             <span class="text-sm font-medium text-slate-600">{{ now()->translatedFormat('l, d F Y') }}</span>
                         </div>
 
+                        <button id="themeToggle" type="button" class="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:border-blue-200 hover:shadow-md" aria-label="Aktifkan mode gelap" title="Mode gelap">
+                            <svg id="themeIconMoon" class="h-5 w-5 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"></path>
+                            </svg>
+                            <svg id="themeIconSun" class="hidden h-5 w-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364 6.364l-1.414-1.414M7.05 7.05 5.636 5.636m12.728 0L16.95 7.05M7.05 16.95l-1.414 1.414M12 8a4 4 0 100 8 4 4 0 000-8z"></path>
+                            </svg>
+                        </button>
+
                         <div class="relative">
                             <button id="notifBtn" type="button" class="relative inline-flex items-center justify-center h-12 w-12 rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:border-blue-200 hover:shadow-md" aria-label="Notifikasi">
                                 <svg class="w-5 h-5 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -266,10 +377,49 @@
     </div>
 
     <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIconMoon = document.getElementById('themeIconMoon');
+        const themeIconSun = document.getElementById('themeIconSun');
+        const themeStorageKey = 'rinka-theme';
         const notifBtn = document.getElementById('notifBtn');
         const notifDropdown = document.getElementById('notifDropdown');
         const profileBtn = document.getElementById('profileBtn');
         const dropdown = document.getElementById('profileDropdown');
+
+        function applyTheme(mode) {
+            const isDark = mode === 'dark';
+            document.documentElement.classList.toggle('theme-dark', isDark);
+
+            if (themeIconMoon && themeIconSun) {
+                themeIconMoon.classList.toggle('hidden', isDark);
+                themeIconSun.classList.toggle('hidden', !isDark);
+            }
+
+            if (themeToggle) {
+                const label = isDark ? 'Aktifkan mode terang' : 'Aktifkan mode gelap';
+                const title = isDark ? 'Mode terang' : 'Mode gelap';
+                themeToggle.setAttribute('aria-label', label);
+                themeToggle.setAttribute('title', title);
+            }
+        }
+
+        try {
+            const savedTheme = localStorage.getItem(themeStorageKey);
+            applyTheme(savedTheme === 'dark' ? 'dark' : 'light');
+        } catch (e) {
+            applyTheme('light');
+        }
+
+        if (themeToggle) {
+            themeToggle.addEventListener('click', function () {
+                const isDark = document.documentElement.classList.contains('theme-dark');
+                const nextMode = isDark ? 'light' : 'dark';
+                applyTheme(nextMode);
+                try {
+                    localStorage.setItem(themeStorageKey, nextMode);
+                } catch (e) {}
+            });
+        }
 
         if (notifBtn && notifDropdown) {
             notifBtn.addEventListener('click', function (e) {
