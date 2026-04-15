@@ -113,8 +113,30 @@
         html.theme-dark .bg-indigo-600 {
             background-color: var(--dm-accent) !important;
         }
+        html.theme-dark .bg-amber-100 {
+            background-color: rgba(245, 158, 11, 0.16) !important;
+        }
+        html.theme-dark .bg-emerald-100 {
+            background-color: rgba(16, 185, 129, 0.16) !important;
+        }
+        html.theme-dark .bg-blue-100 {
+            background-color: rgba(59, 130, 246, 0.16) !important;
+        }
+        html.theme-dark .bg-violet-100 {
+            background-color: rgba(139, 92, 246, 0.16) !important;
+        }
+        html.theme-dark .bg-sky-100 {
+            background-color: rgba(56, 189, 248, 0.16) !important;
+        }
+        html.theme-dark .bg-rose-100 {
+            background-color: rgba(244, 63, 94, 0.16) !important;
+        }
         html.theme-dark .hover\:bg-blue-50:hover,
         html.theme-dark .hover\:bg-slate-50:hover,
+        html.theme-dark .hover\:bg-slate-50\/50:hover,
+        html.theme-dark .hover\:bg-slate-50\/70:hover,
+        html.theme-dark .hover\:bg-slate-50\/80:hover,
+        html.theme-dark .hover\:bg-white\/20:hover,
         html.theme-dark .hover\:bg-cyan-50:hover,
         html.theme-dark .hover\:bg-rose-50:hover {
             background-color: var(--dm-soft) !important;
