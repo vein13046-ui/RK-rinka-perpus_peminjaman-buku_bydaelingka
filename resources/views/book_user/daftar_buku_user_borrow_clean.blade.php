@@ -205,23 +205,14 @@
 
                                 <div>
                                     <label class="mb-1.5 block text-sm font-semibold text-slate-700">Metode Pembayaran</label>
-                                    <select id="paymentMethodInput" name="payment_method" required class="w-full rounded-xl border border-slate-200 px-3.5 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100">
-                                        <option value="cash">Cash</option>
-                                    </select>
+                                    <input type="hidden" name="payment_method" value="cash">
+                                    <div class="w-full rounded-xl border border-slate-200 bg-slate-100 px-3.5 py-3 text-sm text-slate-500">Cash</div>
                                 </div>
 
                                 <div>
                                     <label class="mb-1.5 block text-sm font-semibold text-slate-700">Metode Pengambilan</label>
-                                    <select id="pickupMethodInput" name="pickup_method" required class="w-full rounded-xl border border-slate-200 px-3.5 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100">
-                                        <option value="self_pickup">Diambil ke tempat</option>
-                                        <option value="delivery">Diantar</option>
-                                    </select>
-                                </div>
-
-                                <div id="deliveryDistanceWrap" class="hidden">
-                                    <label class="mb-1.5 block text-sm font-semibold text-slate-700">Jarak Antar (meter)</label>
-                                    <input id="deliveryDistanceInput" type="number" name="delivery_distance_meters" min="1" step="1" class="w-full rounded-xl border border-slate-200 px-3.5 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100" placeholder="Contoh: 350">
-                                    <p class="mt-1.5 text-[11px] text-slate-500">Tarif antar Rp500 per 100 meter.</p>
+                                    <input type="hidden" name="pickup_method" value="self_pickup">
+                                    <div class="w-full rounded-xl border border-slate-200 bg-slate-100 px-3.5 py-3 text-sm text-slate-500">Diambil ke tempat</div>
                                 </div>
 
                                 <div id="borrowCostCard" class="rounded-xl border border-slate-200 bg-slate-50 p-3.5">
@@ -291,10 +282,6 @@
         const borrowConfigFields = document.getElementById('borrowConfigFields');
         const borrowerNameInput = document.getElementById('borrowerNameInput');
         const borrowDaysInput = document.getElementById('borrowDaysInput');
-        const paymentMethodInput = document.getElementById('paymentMethodInput');
-        const pickupMethodInput = document.getElementById('pickupMethodInput');
-        const deliveryDistanceWrap = document.getElementById('deliveryDistanceWrap');
-        const deliveryDistanceInput = document.getElementById('deliveryDistanceInput');
         const damageAgreementInput = document.getElementById('damageAgreementInput');
         const dailyCostLabel = document.getElementById('dailyCostLabel');
         const deliveryCostLabel = document.getElementById('deliveryCostLabel');
@@ -306,26 +293,10 @@
             return 'Rp' + new Intl.NumberFormat('id-ID').format(amount);
         }
 
-        function toggleDeliveryDistanceField() {
-            if (!pickupMethodInput || !deliveryDistanceWrap || !deliveryDistanceInput) {
-                return;
-            }
-
-            const isDelivery = pickupMethodInput.value === 'delivery';
-            deliveryDistanceWrap.classList.toggle('hidden', !isDelivery);
-            deliveryDistanceInput.required = isDelivery && !borrowConfigFields.classList.contains('hidden');
-
-            if (!isDelivery) {
-                deliveryDistanceInput.value = '';
-            }
-        }
-
         function updateBorrowCostCard() {
             const borrowDays = parseInt((borrowDaysInput && borrowDaysInput.value) ? borrowDaysInput.value : '0', 10) || 0;
             const rentalCost = borrowDays * DAILY_RATE;
-            const isDelivery = pickupMethodInput && pickupMethodInput.value === 'delivery';
-            const distanceMeters = parseInt((deliveryDistanceInput && deliveryDistanceInput.value) ? deliveryDistanceInput.value : '0', 10) || 0;
-            const deliveryCost = isDelivery ? Math.ceil(distanceMeters / 100) * DELIVERY_RATE_PER_100M : 0;
+            const deliveryCost = 0; // Always 0 since pickup is always self_pickup
             const totalCost = rentalCost + deliveryCost;
 
             if (dailyCostLabel) {
@@ -346,20 +317,8 @@
             if (borrowDaysInput) {
                 borrowDaysInput.required = isRequired;
             }
-            if (paymentMethodInput) {
-                paymentMethodInput.required = isRequired;
-            }
-            if (pickupMethodInput) {
-                pickupMethodInput.required = isRequired;
-            }
             if (damageAgreementInput) {
                 damageAgreementInput.required = isRequired;
-            }
-
-            toggleDeliveryDistanceField();
-
-            if (!isRequired && deliveryDistanceInput) {
-                deliveryDistanceInput.required = false;
             }
         }
 
@@ -370,20 +329,10 @@
             if (borrowDaysInput) {
                 borrowDaysInput.value = '';
             }
-            if (paymentMethodInput) {
-                paymentMethodInput.value = 'cash';
-            }
-            if (pickupMethodInput) {
-                pickupMethodInput.value = 'self_pickup';
-            }
-            if (deliveryDistanceInput) {
-                deliveryDistanceInput.value = '';
-            }
             if (damageAgreementInput) {
                 damageAgreementInput.checked = false;
             }
 
-            toggleDeliveryDistanceField();
             updateBorrowCostCard();
         }
 

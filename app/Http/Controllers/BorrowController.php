@@ -52,9 +52,6 @@ class BorrowController extends Controller
         $request->validate([
             'borrower_name' => 'required|string|max:255',
             'borrow_days' => 'required|integer|min:1|max:3',
-            'payment_method' => 'required|in:cash',
-            'pickup_method' => 'required|in:self_pickup,delivery',
-            'delivery_distance_meters' => 'required_if:pickup_method,delivery|nullable|integer|min:1|max:100000',
             'damage_agreement' => 'accepted',
         ]);
 
@@ -76,14 +73,10 @@ class BorrowController extends Controller
         }
 
         $borrowDays = (int) $request->borrow_days;
-        $pickupMethod = (string) $request->pickup_method;
-        $deliveryDistanceMeters = $pickupMethod === 'delivery'
-            ? (int) $request->delivery_distance_meters
-            : 0;
+        $pickupMethod = 'self_pickup';
+        $deliveryDistanceMeters = 0;
         $dailyCost = $borrowDays * self::DAILY_RATE;
-        $deliveryCost = $pickupMethod === 'delivery'
-            ? (int) ceil($deliveryDistanceMeters / 100) * self::DELIVERY_RATE_PER_100M
-            : 0;
+        $deliveryCost = 0;
         $totalCost = $dailyCost + $deliveryCost;
 
         BorrowRequest::create([
