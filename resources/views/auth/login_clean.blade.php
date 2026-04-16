@@ -3,7 +3,10 @@
 @section('title', 'Masuk')
 
 @section('content')
-    <div class="relative z-10 min-h-screen flex items-center justify-center px-4 py-8">
+    <!-- Include Intro Component -->
+    @include('components.intro')
+
+    <div class="relative z-10 min-h-screen flex items-center justify-center px-4 py-8" id="login-content" style="opacity: 0; pointer-events: none;">
         <div class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
             <div class="hidden lg:flex flex-col justify-between rounded-[2rem] bg-white/10 backdrop-blur-xl border border-white/15 p-10 text-white shadow-2xl">
                 <div>
