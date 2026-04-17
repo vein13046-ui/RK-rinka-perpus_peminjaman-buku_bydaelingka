@@ -3,7 +3,7 @@
 @section('title', 'Daftar')
 
 @section('content')
-    <div class="relative z-10 min-h-screen flex items-center justify-center px-4 py-8">
+    <div class="relative z-10 min-h-screen flex items-center justify-center px-4 py-8" style="transition: opacity 1s ease-out;">
         <div class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
             <div class="hidden lg:flex flex-col justify-between rounded-[2rem] bg-white/10 backdrop-blur-xl border border-white/15 p-10 text-white shadow-2xl">
                 <div>

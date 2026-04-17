@@ -51,4 +51,6 @@ Route::middleware(['auth', 'admin'])->name('admin.')->prefix('admin')->group(fun
     Route::post('/peminjaman/{borrowRequest}/reject', [BorrowController::class, 'reject'])->name('borrow.reject');
     Route::post('/peminjaman/{borrowRequest}/return', [BorrowController::class, 'approveReturn'])->name('borrow.return');
     Route::post('/peminjaman/{borrowRequest}/return/reject', [BorrowController::class, 'rejectReturn'])->name('borrow.return.reject');
+
+    Route::resource('users', \App\Http\Controllers\UserController::class);
 });

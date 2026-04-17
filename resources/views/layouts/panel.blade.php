@@ -125,6 +125,9 @@
         html.theme-dark .bg-violet-100 {
             background-color: rgba(139, 92, 246, 0.16) !important;
         }
+        html.theme-dark .bg-violet-50 {
+            background-color: rgba(0, 0, 0, 0.1) !important;
+        }
         html.theme-dark .bg-sky-100 {
             background-color: rgba(56, 189, 248, 0.16) !important;
         }
@@ -186,6 +189,7 @@
         $isAdmin = ($user->role ?? 'user') === 'admin';
         $activeDashboard = request()->routeIs('dashboard');
         $activeBooks = request()->routeIs('admin.books.*');
+        $activeUsers = request()->routeIs('admin.users.*');
         $activeUserBooks = request()->routeIs('user.books');
         $activeBorrowStatus = request()->routeIs('borrow.user.index') || request()->routeIs('admin.borrow.*');
         $activeProfile = request()->routeIs('profile');
@@ -258,6 +262,14 @@
                         @if ($borrowNotificationCount > 0)
                             <span class="ml-auto inline-flex items-center rounded-full bg-rose-100 px-2.5 py-1 text-[11px] font-bold text-rose-600">{{ number_format($borrowNotificationCount) }}</span>
                         @endif
+                    </a>
+                    <a href="{{ route('admin.users.index') }}" class="group flex items-center gap-3 px-4 py-3 rounded-2xl transition-all {{ $activeUsers ? 'bg-blue-600 text-white shadow-lg shadow-blue-200' : 'text-slate-600 hover:bg-slate-50 hover:text-blue-700' }}">
+                        <span class="w-10 h-10 rounded-xl flex items-center justify-center {{ $activeUsers ? 'bg-black/15' : 'bg-violet-50' }}">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                            </svg>
+                        </span>
+                        <span class="font-semibold">Daftar Pengguna</span>
                     </a>
                 @else
                     <a href="{{ route('borrow.user.index') }}" class="group flex items-center gap-3 px-4 py-3 rounded-2xl transition-all {{ $activeBorrowStatus ? 'bg-blue-600 text-white shadow-lg shadow-blue-200' : 'text-slate-600 hover:bg-slate-50 hover:text-blue-700' }}">

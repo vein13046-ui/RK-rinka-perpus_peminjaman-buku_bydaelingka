@@ -50,24 +50,20 @@
         const urlParams = new URLSearchParams(window.location.search);
         const forceShowIntro = urlParams.get('show-intro') === 'true';
 
-        // Cek apakah halaman di-refresh (menggunakan performance API)
+        // Cek apakah halaman di-refresh
         const isPageRefreshed = performance.getEntriesByType('navigation')[0]?.type === 'reload' ||
                               (performance.navigation && performance.navigation.type === 1);
 
         // Fungsi untuk menampilkan konten utama
         function showMainContent() {
             if (loginContent) {
-                // Pastikan elemen login memiliki transisi
                 loginContent.style.transition = 'opacity 1s ease-out';
                 loginContent.style.opacity = '1';
                 loginContent.style.pointerEvents = 'auto';
             }
         }
 
-        // Tampilkan intro jika:
-        // 1. Belum pernah melihat intro, ATAU
-        // 2. Ada parameter show-intro=true, ATAU
-        // 3. Halaman di-refresh
+        // Tentukan apakah harus menampilkan intro
         const shouldShowIntro = !hasSeenIntro || forceShowIntro || isPageRefreshed;
 
         if (shouldShowIntro) {
@@ -75,33 +71,33 @@
             if (introScreen) {
                 introScreen.style.display = 'flex';
 
-                // Trigger animasi masuk (staggered)
-                requestAnimationFrame(() => {
-                    setTimeout(() => {
-                        introElements.forEach(el => {
+                // Trigger animasi masuk dengan staggered delay
+                setTimeout(() => {
+                    introElements.forEach((el, index) => {
+                        setTimeout(() => {
                             el.classList.remove('scale-90', 'translate-y-4', 'opacity-0');
                             el.classList.add('scale-100', 'translate-y-0', 'opacity-100');
-                        });
-                    }, 50); // Jeda singkat agar browser me-render CSS awal terlebih dahulu
-                });
+                        }, index * 200); // Staggered animation
+                    });
+                }, 100);
 
-                // Proses keluar
+                // Proses keluar intro
                 setTimeout(() => {
-                    introScreen.classList.add('opacity-0'); // Efek fade out untuk seluruh layar
+                    introScreen.classList.add('opacity-0');
 
                     setTimeout(() => {
-                        introScreen.remove(); // Hapus dari DOM
+                        introScreen.remove();
                         showMainContent();
-                        // Simpan ke localStorage hanya jika bukan force show
+                        // Simpan ke localStorage
                         if (!forceShowIntro) {
                             localStorage.setItem('rinka-intro-seen', 'true');
                         }
-                    }, 1000); // Tunggu sampai transisi opacity selesai (1s)
+                    }, 1000);
 
-                }, 3500); // Lama intro ditampilkan
+                }, 3500);
             }
         } else {
-            // Jika sudah pernah melihat dan tidak ada force show, langsung hapus intro dan tampilkan konten
+            // Langsung tampilkan konten login
             if (introScreen) introScreen.remove();
             showMainContent();
         }
