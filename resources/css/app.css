@@ -1,6 +1,5 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+
+@import "tailwindcss";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -39,6 +38,12 @@
   font-weight: 400;
   font-style: normal;
   font-display: swap;
+}
+
+@theme {
+  --font-opensans: "OpenSans", sans-serif;
+  --font-quicksand: "Quicksand", sans-serif;
+  --font-notosans: "NotoSans", sans-serif;
 }
 
 /* Custom Animations */
