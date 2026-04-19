@@ -72,12 +72,13 @@
             @csrf
             <div>
                 <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Email Perpustakaan</label>
-                <input type="email" name="email" value="{{ old('email') }}" placeholder="admin@sekolah.sch.id"
+                <input type="email" name="email" value="{{ old('email') }}" placeholder="sarin@gmail.com"
                     class="w-full px-4 py-3 bg-slate-50 border {{ $errors->has('email') ? 'border-red-300 ring-2 ring-red-200/50' : 'border-slate-200' }} rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition duration-200 @error('email') ring-2 ring-red-500/20 border-red-500 @enderror"
                     required autofocus>
                 @error('email')
                     <p class="mt-1 text-xs text-red-600 ml-1">{{ $message }}</p>
                 @enderror
+                <p class="mt-1 text-xs text-slate-500 ml-1">Admin default memakai email <span class="font-semibold text-slate-700">sarin@gmail.com</span>.</p>
             </div>
 
             <div>

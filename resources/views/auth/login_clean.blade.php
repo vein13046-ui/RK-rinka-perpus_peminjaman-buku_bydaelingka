@@ -68,9 +68,10 @@
                     @csrf
                     <div>
                         <label class="mb-3 block text-sm font-semibold text-slate-700">Email</label>
-                        <input type="email" name="email" value="{{ old('email') }}" placeholder="admin@sekolah.sch.id" required autofocus
+                        <input type="email" name="email" value="{{ old('email') }}" placeholder="sarin@gmail.com" required autofocus
                             class="w-full rounded-2xl border border-slate-200 bg-slate-50/70 px-4 py-3.5 text-slate-900 outline-none transition focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-100">
                         @error('email') <p class="mt-2 text-sm text-rose-600">{{ $message }}</p> @enderror
+                        <p class="mt-2 text-xs text-slate-500">Admin default dari seed project ini memakai email <span class="font-semibold text-slate-700">sarin@gmail.com</span>.</p>
                     </div>
 
                     <div>
