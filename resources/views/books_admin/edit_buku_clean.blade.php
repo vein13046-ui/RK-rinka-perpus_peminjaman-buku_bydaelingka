@@ -131,7 +131,7 @@
                         <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400">Cover Saat Ini</p>
                         <div class="mt-4 overflow-hidden rounded-[1.5rem] border border-slate-200 bg-slate-50">
                             @if ($book->cover)
-                                <img id="previewImg" src="{{ Storage::url($book->cover) }}" alt="{{ $book->judul }}" class="h-72 w-full object-cover">
+                                <img id="previewImg" src="{{ $book->cover_url }}" alt="{{ $book->judul }}" class="h-72 w-full object-cover">
                             @else
                                 <div id="previewPlaceholder" class="flex h-72 items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200 text-slate-400">
                                     <div class="text-center">

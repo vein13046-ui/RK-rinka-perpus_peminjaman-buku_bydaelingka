@@ -44,7 +44,7 @@
             <div class="bg-white rounded-xl shadow-lg p-6">
                 <div class="text-center">
                     @if($book->cover)
-                        <img src="{{ asset('storage/' . $book->cover) }}" alt="{{ $book->judul }}" class="w-full max-w-xs mx-auto rounded-lg shadow-md mb-4">
+                        <img src="{{ $book->cover_url }}" alt="{{ $book->judul }}" class="w-full max-w-xs mx-auto rounded-lg shadow-md mb-4">
                     @else
                         <div class="w-full max-w-xs mx-auto h-64 bg-slate-200 rounded-lg flex items-center justify-center mb-4">
                             <svg class="w-16 h-16 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

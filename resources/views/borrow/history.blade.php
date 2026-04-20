@@ -59,7 +59,7 @@
                         <tr class="search-row hover:bg-slate-50 transition" data-search-key="{{ mb_strtolower(($history->borrower_name ?? '').' '.($history->book->judul ?? '').' '.($history->book->penulis ?? '')) }}">
                             <td class="px-5 py-4">
                                 <div class="flex items-center gap-3">
-                                    <img src="{{ $history->book && $history->book->cover ? Storage::url($history->book->cover) : 'https://via.placeholder.com/40x60?text=No+Cover' }}" alt="{{ $history->book->judul ?? 'Buku' }}" class="w-10 h-14 rounded-lg object-cover shadow-sm">
+                                    <img src="{{ $history->book?->cover_url ?? 'https://via.placeholder.com/40x60?text=No+Cover' }}" alt="{{ $history->book->judul ?? 'Buku' }}" class="w-10 h-14 rounded-lg object-cover shadow-sm">
                                     <div class="min-w-0">
                                         <p class="font-semibold text-slate-900 truncate">{{ $history->book->judul ?? 'Buku' }}</p>
                                         <p class="text-sm text-slate-500 truncate">{{ $history->book->penulis ?? '-' }}</p>

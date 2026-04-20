@@ -52,7 +52,7 @@ Manajemen inventaris koleksi perpustakaan RinKa Perpus.
                             <td class="py-8 pr-4">
                                 <div class="relative w-16 h-24 bg-slate-100 rounded-md overflow-hidden ring-1 ring-slate-200 shadow-sm transition-transform group-hover:scale-[1.02]">
                                     @if ($book->cover)
-                                        <img src="{{ Storage::url($book->cover) }}" alt="{{ $book->judul }}" class="w-full h-full object-cover">
+                                        <img src="{{ $book->cover_url }}" alt="{{ $book->judul }}" class="w-full h-full object-cover">
                                     @else
                                         <div class="flex items-center justify-center h-full bg-slate-50">
                                             <svg class="w-8 h-8 text-slate-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">

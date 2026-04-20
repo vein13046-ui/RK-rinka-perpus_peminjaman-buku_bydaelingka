@@ -70,7 +70,7 @@
                         <div class="rounded-3xl border border-slate-100 bg-slate-50/80 p-4 flex gap-4">
                             <div class="w-20 h-28 rounded-2xl overflow-hidden bg-white shadow-sm shrink-0">
                                 @if ($book->cover)
-                                    <img src="{{ Storage::url($book->cover) }}" alt="{{ $book->judul }}" class="w-full h-full object-cover">
+                                    <img src="{{ $book->cover_url }}" alt="{{ $book->judul }}" class="w-full h-full object-cover">
                                 @else
                                     <div class="w-full h-full flex items-center justify-center bg-slate-100 text-slate-400">
                                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">

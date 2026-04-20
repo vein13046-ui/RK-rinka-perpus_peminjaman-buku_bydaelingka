@@ -137,7 +137,7 @@
                                             data-title="{{ $borrow->book->judul ?? '' }}"
                                             data-author="{{ $borrow->book->penulis ?? '' }}"
                                             data-category="{{ $borrow->book->kategori ?? '' }}"
-                                            data-cover="{{ $borrow->book && $borrow->book->cover ? Storage::url($borrow->book->cover) : '' }}"
+                                            data-cover="{{ $borrow->book?->cover_url ?? '' }}"
                                             data-fetch-url="{{ route('borrow.pickup.data', $borrow) }}"
                                             data-code="{{ $borrow->pickup_code }}"
                                             data-deadline="{{ optional($borrow->pickup_deadline)->translatedFormat('d M Y H:i') }}"

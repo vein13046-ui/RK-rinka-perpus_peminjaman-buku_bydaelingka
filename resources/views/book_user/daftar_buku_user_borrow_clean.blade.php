@@ -72,7 +72,7 @@
                 <article class="search-card group overflow-hidden rounded-[1.25rem] border border-slate-100 bg-white shadow-sm shadow-slate-200/40 transition hover:-translate-y-0.5 hover:shadow-lg" data-search-key="{{ mb_strtolower($book->judul.' '.$book->penulis.' '.$book->kategori.' '.$book->penerbit) }}">
                     <div class="relative h-44 sm:h-48 bg-slate-100">
                         @if ($book->cover)
-                            <img src="{{ Storage::url($book->cover) }}" alt="{{ $book->judul }}" class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
+                            <img src="{{ $book->cover_url }}" alt="{{ $book->judul }}" class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
                         @else
                             <div class="flex h-full items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200 text-slate-400">
                                 <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -113,7 +113,7 @@
                                     data-title="{{ $book->judul }}"
                                     data-author="{{ $book->penulis }}"
                                     data-category="{{ $book->kategori }}"
-                                    data-cover="{{ $book->cover ? Storage::url($book->cover) : '' }}"
+                                    data-cover="{{ $book->cover_url }}"
                                     data-fetch-url="{{ route('borrow.pickup.data', $activeBorrow) }}"
                                     data-code="{{ $activeBorrow->pickup_code }}"
                                     data-deadline="{{ optional($activeBorrow->pickup_deadline)->translatedFormat('d M Y H:i') }}"
@@ -147,7 +147,7 @@
                                     data-title="{{ $book->judul }}"
                                     data-author="{{ $book->penulis }}"
                                     data-category="{{ $book->kategori }}"
-                                    data-cover="{{ $book->cover ? Storage::url($book->cover) : '' }}"
+                                    data-cover="{{ $book->cover_url }}"
                                 >
                                     Pinjam
                                 </button>

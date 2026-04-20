@@ -5,8 +5,8 @@
 
 @section('content')
     @php
-        $lightChatBgUrl = str_replace(' ', '%20', \Illuminate\Support\Facades\Storage::disk('public')->url('chatbox bg/chat box.cerah mode.jpg'));
-        $darkChatBgUrl = str_replace(' ', '%20', \Illuminate\Support\Facades\Storage::disk('public')->url('chatbox bg/chat box.drak mode.jpg'));
+        $lightChatBgUrl = route('media.show', ['path' => 'chatbox bg/chat box.cerah mode.jpg']);
+        $darkChatBgUrl = route('media.show', ['path' => 'chatbox bg/chat box.drak mode.jpg']);
         $user = Auth::user();
         $isAdmin = $isAdmin ?? (($user->role ?? 'user') === 'admin');
         $threads = $threads ?? collect();

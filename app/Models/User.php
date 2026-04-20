@@ -69,7 +69,11 @@ class User extends Authenticatable
         $profilePhotoPath = $this->normalizePublicPath($this->profile_photo);
 
         if ($profilePhotoPath && $disk->exists($profilePhotoPath)) {
-            return $disk->url($profilePhotoPath);
+            return route('media.show', ['path' => $profilePhotoPath]);
+        }
+
+        if ($profilePhotoPath && is_file(public_path('storage/' . $profilePhotoPath))) {
+            return asset('storage/' . $this->encodePathForUrl($profilePhotoPath));
         }
 
         return asset('default-avatar.svg');
@@ -95,6 +99,13 @@ class User extends Authenticatable
         }
 
         return $value !== '' ? $value : null;
+    }
+
+    private function encodePathForUrl(string $path): string
+    {
+        $segments = array_filter(explode('/', $path), static fn ($segment) => $segment !== '');
+
+        return implode('/', array_map('rawurlencode', $segments));
     }
 
     public function borrowRequests(): HasMany

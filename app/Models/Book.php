@@ -33,17 +33,64 @@ class Book extends Model
     public function getCoverUrlAttribute(): string
     {
         $defaultCover = asset('cover_buku/default-cover.svg');
-        $cover = trim((string) $this->cover);
+        $cover = $this->normalizePublicPath($this->cover);
 
-        if ($cover === '') {
+        if ($cover === null) {
             return $defaultCover;
         }
 
-        if (Storage::disk('public')->exists($cover)) {
-            return route('public.storage.show', ['path' => $cover]);
+        $disk = Storage::disk('public');
+
+        if ($disk->exists($cover)) {
+            return route('media.show', ['path' => $cover]);
+        }
+
+        // Legacy fallback: file is physically available in public/storage.
+        $legacyPublicPath = public_path('storage/' . $cover);
+        if (is_file($legacyPublicPath)) {
+            return asset('storage/' . $this->encodePathForUrl($cover));
         }
 
         return $defaultCover;
+    }
+
+    private function normalizePublicPath(?string $value): ?string
+    {
+        $value = trim((string) $value);
+        if ($value === '') {
+            return null;
+        }
+
+        if (filter_var($value, FILTER_VALIDATE_URL)) {
+            $path = parse_url($value, PHP_URL_PATH);
+            $value = is_string($path) ? $path : '';
+        }
+
+        $value = rawurldecode($value);
+        $value = str_replace('\\', '/', $value);
+        $value = preg_replace('#/+#', '/', $value) ?? $value;
+        $value = ltrim($value, '/');
+
+        if (str_starts_with($value, 'storage/')) {
+            $value = substr($value, strlen('storage/'));
+        }
+
+        if (str_starts_with($value, 'public/')) {
+            $value = substr($value, strlen('public/'));
+        }
+
+        if (str_starts_with($value, 'app/public/')) {
+            $value = substr($value, strlen('app/public/'));
+        }
+
+        return $value !== '' ? $value : null;
+    }
+
+    private function encodePathForUrl(string $path): string
+    {
+        $segments = array_filter(explode('/', $path), static fn ($segment) => $segment !== '');
+
+        return implode('/', array_map('rawurlencode', $segments));
     }
 
     public function borrowRequests(): HasMany

@@ -7,7 +7,6 @@ use App\Models\BorrowRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
 class BorrowController extends Controller
 {
@@ -191,7 +190,7 @@ class BorrowController extends Controller
             'title' => $borrowRequest->book->judul ?? '',
             'author' => $borrowRequest->book->penulis ?? '',
             'category' => $borrowRequest->book->kategori ?? '',
-            'cover' => $borrowRequest->book && $borrowRequest->book->cover ? Storage::url($borrowRequest->book->cover) : '',
+            'cover' => $borrowRequest->book?->cover_url ?? '',
         ]);
     }
 
